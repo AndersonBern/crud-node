@@ -14,9 +14,11 @@ app.engine('hbs', hbs.engine({
 }));
 app.set('view engine', 'hbs');
 
+//Middleware para usar arquivos estaticos(css,js)
+app.use(express.static('public'));
 
 app.get('/', (req, res)=> {
-    res.render('index');
+    res.render('index', {nome: 'Bernardo'});
 });
 
 app.listen(PORT, ()=> {
