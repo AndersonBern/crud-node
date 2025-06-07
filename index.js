@@ -17,8 +17,15 @@ app.set('view engine', 'hbs');
 //Middleware para usar arquivos estaticos(css,js)
 app.use(express.static('public'));
 
+//Rotas
 app.get('/', (req, res)=> {
-    res.render('index', {nome: 'Bernardo'});
+    res.render('index', {navActiveCadastrar: true});
+});
+app.get('/users', (req, res)=> {
+    res.render('users', {navActiveUsers: true});
+});
+app.get('/editar', (req, res)=> {
+    res.render('editar');
 });
 
 app.listen(PORT, ()=> {
