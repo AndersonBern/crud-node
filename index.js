@@ -36,7 +36,44 @@ app.get('/editar', (req, res)=> {
 });
 
 app.post('/cad', (req, res)=> {
-    res.send(req.body.email);
+    //Valores vindos do form
+    var nome = req.body.nome;
+    var email = req.body.email;
+
+    //Array que vai conter os erros
+    const erros = [];
+
+    //Remover os espaços em branco
+    nome = nome.trim();
+    email = email.trim();
+
+    //Limpar o nome de caracteres especiais(apenas letras)
+    nome = nome.replace(/[^A-zÀ-ú/s]/gi,'');
+    console.log(nome)
+
+    //Se está VAZIO ou INDEFINIDO ou NULO
+    if(nome == '' || typeof nome == undefined || nome == null) {
+        erros.push({mensagem: 'Campo nome não pode ser vazio!'})
+    }
+    if(email == '' || typeof email == undefined || email == null) {
+        erros.push({mensagem: 'Campo email não pode ser vazio!'})
+    }
+
+    //Verificar se o campo NOME é valido
+    if(!/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ ]+$/.test(nome)) {
+        erros.push({mensagem: 'Nome inválido!'});
+    };
+
+    //Verificar se o campo EMAIL é valido
+    if(!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+        erros.push({mensagem: 'Email inválido!'});
+    };
+
+    //MOSTRAR erros
+    if(erros.length > 0) {
+        console.log(erros);
+    }
+
 });
 
 app.listen(PORT, ()=> {
