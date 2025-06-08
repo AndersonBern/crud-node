@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 //Requisição handlebars
 const hbs = require('express-handlebars');
+//Requisição LER valores do frontend
+const bodyParser = require('body-parser');
 //Porta
 const PORT = process.env.PORT || 3000;
 
@@ -16,6 +18,8 @@ app.set('view engine', 'hbs');
 
 //Middleware para usar arquivos estaticos(css,js)
 app.use(express.static('public'));
+//Middleware para configurar o LEITOR de valores
+app.use(bodyParser.urlencoded({extended:false}));
 
 //Rotas
 app.get('/', (req, res)=> {
@@ -26,6 +30,13 @@ app.get('/users', (req, res)=> {
 });
 app.get('/editar', (req, res)=> {
     res.render('editar');
+});
+app.get('/editar', (req, res)=> {
+    res.render('editar');
+});
+
+app.post('/cad', (req, res)=> {
+    res.send(req.body.email);
 });
 
 app.listen(PORT, ()=> {
