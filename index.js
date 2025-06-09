@@ -6,6 +6,8 @@ const app = express();
 const hbs = require('express-handlebars');
 //Requisição LER valores do frontend
 const bodyParser = require('body-parser');
+//Requisição SESSÕES
+const session = require('express-session');
 //Porta
 const PORT = process.env.PORT || 3000;
 
@@ -20,6 +22,12 @@ app.set('view engine', 'hbs');
 app.use(express.static('public'));
 //Middleware para configurar o LEITOR de valores
 app.use(bodyParser.urlencoded({extended:false}));
+//Middleware para configurar as SESSÕES
+app.use(session({
+    secret: 'CriaUmaChaveQualquer',
+    resave: false,
+    saveUninitialized: true
+}));
 
 //Rotas
 app.get('/', (req, res)=> {
@@ -45,7 +53,7 @@ app.post('/cad', (req, res)=> {
 
     //Remover os espaços em branco
     nome = nome.trim();
-    email = email.trim();
+    email = email.trim(); 
 
     //Limpar o nome de caracteres especiais(apenas letras)
     nome = nome.replace(/[^A-zÀ-ú/s]/gi,'');
@@ -69,10 +77,20 @@ app.post('/cad', (req, res)=> {
         erros.push({mensagem: 'Email inválido!'});
     };
 
-    //MOSTRAR erros
+    //GUARDAR erros na SESSÃO
     if(erros.length > 0) {
         console.log(erros);
-    }
+        req.session.errors = erros;
+        req.session.sucess = false;
+        return res.redirect('/');
+    };
+
+    //SUCESSO caso não aja ERROS
+    console.log('Validação realizada com sucesso!');
+    req.session.sucess = true;
+    return res.redirect('/');
+
+    //Salvar no BANCO DE DADOS
 
 });
 
