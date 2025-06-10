@@ -31,6 +31,14 @@ app.use(session({
 
 //Rotas
 app.get('/', (req, res)=> {
+    if(req.session.errors){
+        let arrayErros = req.session.errors;
+        req.session.errors = '';
+        res.render('index', {navActiveCadastrar: true, msgError: arrayErros} );
+    };
+    if(req.session.sucess){
+        res.render('index', {navActiveCadastrar: true, msgSucess: true} );
+    };
     res.render('index', {navActiveCadastrar: true});
 });
 app.get('/users', (req, res)=> {
@@ -61,7 +69,7 @@ app.post('/cad', (req, res)=> {
 
     //Se está VAZIO ou INDEFINIDO ou NULO
     if(nome == '' || typeof nome == undefined || nome == null) {
-        erros.push({mensagem: 'Campo nome não pode ser vazio!'})
+        erros.push({mensagem: 'Campo nome não pode ser vazio!'});
     }
     if(email == '' || typeof email == undefined || email == null) {
         erros.push({mensagem: 'Campo email não pode ser vazio!'})
