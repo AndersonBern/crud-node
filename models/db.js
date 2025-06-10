@@ -1,5 +1,9 @@
+//Requisição do modulo Sequelize
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('banco','usuario', 'senha', {
+
+//Instencia para o Sequelize
+const sequelize = new Sequelize('node_exemplo', 'root', '', {
+    //Configurações de conecção
     host: '127.0.0.1',
     dialect: 'mysql',
     define: {
@@ -9,3 +13,12 @@ const sequelize = new Sequelize('banco','usuario', 'senha', {
     },
     logging: false
 });
+
+//Testando a conexão com o banco
+/*sequelize.authenticate().then(()=> {
+    console.log('Conexão no banco com Sucesso!');
+}).catch((err)=> {
+    console.log('Falha ao se conectar' +err);
+});*/
+
+module.exports = {Sequelize, sequelize};
