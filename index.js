@@ -8,6 +8,9 @@ const hbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 //Requisição SESSÕES
 const session = require('express-session');
+//Requisição da TABELA do BANCO DE DADOS
+const Usuario = require('./models/Usuario');
+
 //Porta
 const PORT = process.env.PORT || 3000;
 
