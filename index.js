@@ -37,6 +37,7 @@ app.get('/', (req, res)=> {
         res.render('index', {navActiveCadastrar: true, msgError: arrayErros} );
     };
     if(req.session.sucess){
+        req.session.sucess = false;
         res.render('index', {navActiveCadastrar: true, msgSucess: true} );
     };
     res.render('index', {navActiveCadastrar: true});
