@@ -46,7 +46,19 @@ app.get('/', (req, res)=> {
     res.render('index', {navActiveCadastrar: true});
 });
 app.get('/users', (req, res)=> {
-    res.render('users', {navActiveUsers: true});
+    //ENCONTRANDO todos os VALORES do BANCO DE DADOS
+    Usuario.findAll().then((valores)=> {
+        //Se EXISTIR algum valor no banco de dados...
+        if(valores.length > 0) {
+            return res.render('users', {navActiveUsers: true, table: true, usuarios: valores.map(valores => valores.toJSON())});
+        }
+        else {
+            res.render('users', {navActiveUsers: true, table: false});
+        };
+    }).catch((err)=> {
+        console.log(`Houve algum problema: ${err}`)
+    });
+
 });
 app.get('/editar', (req, res)=> {
     res.render('editar');
@@ -97,13 +109,20 @@ app.post('/cad', (req, res)=> {
         return res.redirect('/');
     };
 
-    //SUCESSO caso não aja ERROS
-    console.log('Validação realizada com sucesso!');
-    req.session.sucess = true;
-    return res.redirect('/');
-
     //Salvar no BANCO DE DADOS
-
+    Usuario.create({
+        nome: nome,
+        email: email.toLowerCase()
+    }).then(()=> {
+        //SUCESSO caso não aja ERROS
+        console.log('Cadastrado com sucesso!');
+        req.session.sucess = true;
+        return res.redirect('/');
+    }).catch((err)=> {
+        //FRACASSO caso aja ERROS
+        console.log('Ops...Houve algum erro: '+ err);
+    });
+    
 });
 
 app.listen(PORT, ()=> {
