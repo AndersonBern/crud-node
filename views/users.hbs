@@ -12,10 +12,11 @@
       </tr>
     </thead>
     <tbody>
+      {{#each usuarios}}
       <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
+        <th scope="row">{{id}}</th>
+        <td>{{nome}}</td>
+        <td>{{email}}</td>
         <td>
           <div class="row g-1">
               <div class="col-6 col-md-3">
@@ -27,6 +28,7 @@
           </div>
         </td>
       </tr>
+      {{/each}}
     </tbody>
   </table>
   {{else}}
