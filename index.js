@@ -63,8 +63,9 @@ app.get('/users', (req, res)=> {
 app.get('/editar', (req, res)=> {
     res.render('editar');
 });
-app.get('/editar', (req, res)=> {
-    res.render('editar');
+app.post('/editar', (req, res)=> {
+    let id = req.body.id;
+    
 });
 
 app.post('/cad', (req, res)=> {
