@@ -63,9 +63,17 @@ app.get('/users', (req, res)=> {
 app.get('/editar', (req, res)=> {
     res.render('editar');
 });
+
 app.post('/editar', (req, res)=> {
     let id = req.body.id;
-    
+    //CONSULTA da tabela correspondente ao ID
+    Usuario.findByPk(id).then((dados)=> {
+        return res.render('editar', {error: false, id: dados.id, nome: dados.nome, email: dados.email});
+
+    }).catch((err)=> {
+        console.log(err);
+        return res.render('editar', {error: true, problema: 'Não é possivel EDITAR este registro!'});
+    });
 });
 
 app.post('/cad', (req, res)=> {
