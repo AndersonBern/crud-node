@@ -188,9 +188,24 @@ app.post('/update', (req, res)=> {
             where: {
                 id: req.body.id
             }
-        }).then((resultado)=> {
+        }).then(()=> {
             return res.redirect('/users');
-            
+
+        }).catch((err)=> {
+            console.log(err);
+        });
+});
+
+//Rota para DELETAR Registros
+app.post('/delete', (req, res)=> {
+    Usuario.destroy(
+        {
+            where: {
+                id: req.body.id
+            }
+        }).then(()=> {
+            return res.redirect('/users');
+
         }).catch((err)=> {
             console.log(err);
         });
@@ -198,4 +213,4 @@ app.post('/update', (req, res)=> {
 
 app.listen(PORT, ()=> {
     console.log(`Servidor rodando em: http://localhost:${PORT}`);
-})
+});

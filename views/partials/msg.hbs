@@ -4,6 +4,12 @@
 </div>
 {{/if}}
 
+{{#if sucessEdit}}
+<div class="alert alert-success" role="alert">
+  Dados ATUALIZADOS com SUCESSO!
+</div>
+{{/if}}
+
 {{#each msgError}}
 <div class="alert alert-danger" role="alert">
   {{mensagem}}
